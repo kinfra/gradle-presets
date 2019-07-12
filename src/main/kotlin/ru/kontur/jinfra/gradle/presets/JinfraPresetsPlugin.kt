@@ -5,7 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.invocation.Gradle
 import org.gradle.util.VersionNumber
 
-class PresetsPlugin : Plugin<Project> {
+class JinfraPresetsPlugin : Plugin<Project> {
 
     private val presets = listOf(
         BasicPreset,

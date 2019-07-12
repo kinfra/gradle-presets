@@ -8,7 +8,7 @@ interface Preset {
 
 }
 
-fun Project.apply(preset: Preset) {
+internal fun Project.apply(preset: Preset) {
     with(preset) {
         configure()
     }

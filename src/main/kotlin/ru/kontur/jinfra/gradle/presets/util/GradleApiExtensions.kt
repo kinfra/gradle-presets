@@ -15,7 +15,7 @@ import kotlin.reflect.KProperty
  */
 
 internal inline fun <reified T : Any> Project.extension(block: T.() -> Unit = {}): T {
-    return extensions.getByType(T::class.java)
+    return extensions.getByType(T::class.java).apply(block)
 }
 
 internal inline fun <reified T : Task> TaskContainer.allWithType(noinline block: (T) -> Unit) {
