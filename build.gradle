@@ -35,22 +35,26 @@ task install(group: 'publishing') {
     dependsOn publishToMavenLocal
 }
 
-task sourcesJar(type: Jar) {
-    group = "build"
-    description = "Assemble a JAR containing all sources of the module."
-    archiveClassifier = "sources"
-
-    from sourceSets.main.allSource
-    dependsOn classes
-}
-
-assemble.dependsOn sourcesJar
-
 afterEvaluate {
     publishing {
         publications {
-            getByName("pluginMaven") {
-                artifact sourcesJar
+            pluginMaven {
+                artifact publishPluginJar
+            }
+        }
+
+        repositories {
+            def properties = project.properties
+            def repoUrl = properties["publishing.repo.url"]
+            if (repoUrl) {
+                maven {
+                    url = repoUrl
+
+                    credentials {
+                        username = properties["publishing.repo.username"]
+                        password = properties["publishing.repo.password"]
+                    }
+                }
             }
         }
     }
