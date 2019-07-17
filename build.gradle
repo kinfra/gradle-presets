@@ -6,12 +6,11 @@ plugins {
 }
 
 group = "ru.kontur.jinfra"
-version = "1.0"
+version = "1.0.1"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-
-    compileOnly "org.jetbrains.kotlin:kotlin-gradle-plugin"
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin"
 }
 
 repositories {
