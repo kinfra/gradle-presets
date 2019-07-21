@@ -3,6 +3,7 @@ package ru.kontur.jinfra.gradle.presets
 import org.gradle.api.Project
 import org.gradle.util.VersionNumber
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
+import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
 import ru.kontur.jinfra.gradle.presets.util.*
 
@@ -12,9 +13,25 @@ object KotlinPreset : Preset {
 
     override fun Project.configure() {
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+            val kotlinVersion = getPluginVersion()
+
             configureCompiler()
-            addStdlibDependency()
+            addStdlibDependency(kotlinVersion)
         }
+    }
+
+    private fun Project.getPluginVersion(): String {
+        try {
+            Class.forName("org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper")
+        } catch (e: ClassNotFoundException) {
+            throw IllegalStateException(
+                "Please add org.jetbrains.kotlin.jvm plugin to classpath of the build script " +
+                        "that uses plugin ru.kontur.jinfra.presets"
+            )
+        }
+
+        val kotlinPlugin = plugins.getPlugin(KotlinPluginWrapper::class.java)
+        return kotlinPlugin.kotlinPluginVersion
     }
 
     private fun Project.configureCompiler() {
@@ -29,9 +46,7 @@ object KotlinPreset : Preset {
         }
     }
 
-    private fun Project.addStdlibDependency() {
-        val kotlinVersion = VersionNumber.parse(getKotlinPluginVersion()!!).toString()
-
+    private fun Project.addStdlibDependency(kotlinVersion: String) {
         val implementation by configurations
 
         // Add dependency on Kotlin stdlib
