@@ -123,11 +123,14 @@ The plugin creates a `MavenPublication` named `maven` and adds a project compone
   
 Usually our projects which are being published are either of these.
 
-The publication is configured to use resolved versions in POM.
+The publication is configured to use resolved versions in POM,
+including versions in dependency constraints of a [Java Platform][java-platform].
 
 Configuration of the POM can be accessed via `pom { }` block in the project, just as in `MavenPublication`.
 
 Also plugin creates an `install` task as an alias for `publishToMavenLocal`.
+
+[java-platform]: https://docs.gradle.org/current/userguide/java_platform_plugin.html
 
 #### Library configuration (applied with `java-library` plugin)
 

@@ -1,7 +1,10 @@
 package ru.kontur.jinfra.gradle.presets
 
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
+import org.gradle.api.attributes.Usage
 import org.gradle.api.plugins.BasePluginConvention
+import org.gradle.api.plugins.JavaPlatformPlugin
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPom
 import org.gradle.api.publish.maven.MavenPublication
@@ -13,9 +16,10 @@ import ru.kontur.jinfra.gradle.presets.util.get
 
 object PublishingPreset : Preset {
 
-    const val PUBLICATION_NAME = "maven"
-    const val POM_PROJECT_EXTENSION = "pom"
     const val INSTALL_TASK_NAME = "install"
+
+    private const val PUBLICATION_NAME = "maven"
+    private const val POM_PROJECT_EXTENSION = "pom"
 
     override fun Project.configure() {
         pluginManager.withPlugin("maven-publish") {
@@ -35,15 +39,17 @@ object PublishingPreset : Preset {
     private fun Project.configurePublication(publication: MavenPublication) {
         publication.useResolvedVersions()
 
-        // Include Java Library in publication, if present
         pluginManager.withPlugin("java-library") {
+            // Include Java Library in the publication, if present
             publication.from(components["java"])
             setupArtifactId(publication)
         }
 
-        // Include Java Platform in publication, if present
         pluginManager.withPlugin("java-platform") {
+            // Include Java Platform in the publication, if present
             publication.from(components["javaPlatform"])
+
+            useResolvedConstraintVersions(publication)
         }
     }
 
@@ -54,6 +60,41 @@ object PublishingPreset : Preset {
                 strategy.fromResolutionResult()
             }
         }
+    }
+
+    @Suppress("UnstableApiUsage")
+    private fun Project.useResolvedConstraintVersions(publication: MavenPublication) {
+        val apiConstraints = getConstraintsConfiguration(JavaPlatformPlugin.API_CONFIGURATION_NAME)
+        val runtimeConstraints = getConstraintsConfiguration(JavaPlatformPlugin.RUNTIME_CONFIGURATION_NAME).apply {
+            extendsFrom(apiConstraints)
+        }
+
+        publication.versionMapping { mapping ->
+            mapping.usage(Usage.JAVA_API) { strategy ->
+                strategy.fromResolutionOf(apiConstraints)
+            }
+            mapping.usage(Usage.JAVA_RUNTIME) { strategy ->
+                strategy.fromResolutionOf(runtimeConstraints)
+            }
+        }
+    }
+
+    @Suppress("UnstableApiUsage")
+    private fun Project.getConstraintsConfiguration(configurationName: String): Configuration {
+        val constraintsConfigurationName = configurationName + "Constraints"
+        val constraintsConfiguration = configurations.create(constraintsConfigurationName).apply {
+            description = "Constraints of '$configurationName' configuration"
+        }
+
+        configurations[configurationName].dependencyConstraints.all { constraint ->
+            val notation = with(constraint) {
+                "$group:$name:${version ?: ""}"
+            }
+
+            constraintsConfiguration.dependencies += dependencies.create(notation)
+        }
+
+        return constraintsConfiguration
     }
 
     /**
