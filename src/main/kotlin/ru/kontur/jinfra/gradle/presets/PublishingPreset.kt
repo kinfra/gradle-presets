@@ -37,12 +37,15 @@ object PublishingPreset : Preset {
     }
 
     private fun Project.configurePublication(publication: MavenPublication) {
-        publication.useResolvedVersions()
+        useResolvedVersions(publication)
+
+        pluginManager.withPlugin("base") {
+            setupArtifactId(publication)
+        }
 
         pluginManager.withPlugin("java-library") {
             // Include Java Library in the publication, if present
             publication.from(components["java"])
-            setupArtifactId(publication)
         }
 
         pluginManager.withPlugin("java-platform") {
@@ -54,8 +57,8 @@ object PublishingPreset : Preset {
     }
 
     @Suppress("UnstableApiUsage")
-    private fun MavenPublication.useResolvedVersions() {
-        versionMapping { mapping ->
+    private fun useResolvedVersions(publication: MavenPublication) {
+        publication.versionMapping { mapping ->
             mapping.allVariants { strategy ->
                 strategy.fromResolutionResult()
             }

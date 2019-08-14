@@ -31,6 +31,10 @@ pluginBundle {
     description = "Default configuration for Gradle projects used in Kontur"
 }
 
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+}
+
 task install(group: 'publishing') {
     dependsOn publishToMavenLocal
 }
