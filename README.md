@@ -116,29 +116,25 @@ Its version is the same as Kotlin plugin's one.
 
 The plugin creates a `MavenPublication` named `maven` and adds a project component to it:
 
-  * In a `java-library` project the `java` component is being added.  
-    Also `artifactId` is changed to project's `archivesBaseName` instead of project's name.
+  * In a `java-library` project the `java` component is being added.
 
   * In a `java-platform` project the `javaPlatform` component is being added.
   
-Usually our projects which are being published are either of these.
+Usually our projects that are being published are either of these.
 
-The publication is configured to use resolved versions in POM,
-including versions in dependency constraints of a [Java Platform][java-platform].
+Publication's `artifactId` is changed to project's `archivesBaseName` instead of project's name.
 
 Configuration of the POM can be accessed via `pom { }` block in the project, just as in `MavenPublication`.
 
-Also plugin creates an `install` task as an alias for `publishToMavenLocal`.
-
-[java-platform]: https://docs.gradle.org/current/userguide/java_platform_plugin.html
+Also, plugin creates a task named `install` as an alias for `publishToMavenLocal`.
 
 #### Library configuration (applied with `java-library` plugin)
 
 ##### Sources JAR
 
-For a library project a `sourcesJar` task is created.
+A task named `sourcesJar` is created in the project.
 
 Obliviously it packages project's main sources into a JAR with `sources` classifier.
 
 The task is configured as a dependency for `assemble` task
-and as an artifact for publication (if `maven-publish` plugin is applied)
+and as an artifact for publication (if `maven-publish` plugin is applied).

@@ -37,64 +37,19 @@ object PublishingPreset : Preset {
     }
 
     private fun Project.configurePublication(publication: MavenPublication) {
-        publication.useResolvedVersions()
+        pluginManager.withPlugin("base") {
+            setupArtifactId(publication)
+        }
 
         pluginManager.withPlugin("java-library") {
             // Include Java Library in the publication, if present
             publication.from(components["java"])
-            setupArtifactId(publication)
         }
 
         pluginManager.withPlugin("java-platform") {
             // Include Java Platform in the publication, if present
             publication.from(components["javaPlatform"])
-
-            useResolvedConstraintVersions(publication)
         }
-    }
-
-    @Suppress("UnstableApiUsage")
-    private fun MavenPublication.useResolvedVersions() {
-        versionMapping { mapping ->
-            mapping.allVariants { strategy ->
-                strategy.fromResolutionResult()
-            }
-        }
-    }
-
-    @Suppress("UnstableApiUsage")
-    private fun Project.useResolvedConstraintVersions(publication: MavenPublication) {
-        val apiConstraints = getConstraintsConfiguration(JavaPlatformPlugin.API_CONFIGURATION_NAME)
-        val runtimeConstraints = getConstraintsConfiguration(JavaPlatformPlugin.RUNTIME_CONFIGURATION_NAME).apply {
-            extendsFrom(apiConstraints)
-        }
-
-        publication.versionMapping { mapping ->
-            mapping.usage(Usage.JAVA_API) { strategy ->
-                strategy.fromResolutionOf(apiConstraints)
-            }
-            mapping.usage(Usage.JAVA_RUNTIME) { strategy ->
-                strategy.fromResolutionOf(runtimeConstraints)
-            }
-        }
-    }
-
-    @Suppress("UnstableApiUsage")
-    private fun Project.getConstraintsConfiguration(configurationName: String): Configuration {
-        val constraintsConfigurationName = configurationName + "Constraints"
-        val constraintsConfiguration = configurations.create(constraintsConfigurationName).apply {
-            description = "Constraints of '$configurationName' configuration"
-        }
-
-        configurations[configurationName].dependencyConstraints.all { constraint ->
-            val notation = with(constraint) {
-                "$group:$name:${version ?: ""}"
-            }
-
-            constraintsConfiguration.dependencies += dependencies.create(notation)
-        }
-
-        return constraintsConfiguration
     }
 
     /**
