@@ -120,18 +120,13 @@ The plugin creates a `MavenPublication` named `maven` and adds a project compone
 
   * In a `java-platform` project the `javaPlatform` component is being added.
   
-Usually our projects which are being published are either of these.
+Usually our projects that are being published are either of these.
 
 Publication's `artifactId` is changed to project's `archivesBaseName` instead of project's name.
 
-The publication is configured to use resolved versions in POM,
-including versions in dependency constraints of a [Java Platform][java-platform].
-
 Configuration of the POM can be accessed via `pom { }` block in the project, just as in `MavenPublication`.
 
-Also plugin creates a task named `install` as an alias for `publishToMavenLocal`.
-
-[java-platform]: https://docs.gradle.org/current/userguide/java_platform_plugin.html
+Also, plugin creates a task named `install` as an alias for `publishToMavenLocal`.
 
 #### Library configuration (applied with `java-library` plugin)
 
