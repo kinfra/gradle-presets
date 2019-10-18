@@ -1,11 +1,10 @@
-package ru.kontur.jinfra.gradle.presets.util
+package ru.kontur.kinfra.gradle.presets.util
 
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ConfigurationContainer
-import org.gradle.api.plugins.ExtensionContainer
 import org.gradle.api.tasks.TaskContainer
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty

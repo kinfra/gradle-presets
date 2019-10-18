@@ -1,11 +1,9 @@
-package ru.kontur.jinfra.gradle.presets
+package ru.kontur.kinfra.gradle.presets
 
 import org.gradle.api.Project
-import org.gradle.util.VersionNumber
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
-import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
-import ru.kontur.jinfra.gradle.presets.util.*
+import ru.kontur.kinfra.gradle.presets.util.*
 
 object KotlinPreset : Preset {
 
@@ -26,7 +24,7 @@ object KotlinPreset : Preset {
         } catch (e: ClassNotFoundException) {
             throw IllegalStateException(
                 "Please add org.jetbrains.kotlin.jvm plugin to classpath of the build script " +
-                        "that uses plugin ru.kontur.jinfra.presets"
+                        "that uses plugin ru.kontur.kinfra.presets"
             )
         }
 

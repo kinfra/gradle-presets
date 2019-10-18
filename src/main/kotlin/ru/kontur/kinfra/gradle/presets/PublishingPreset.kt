@@ -1,18 +1,15 @@
-package ru.kontur.jinfra.gradle.presets
+package ru.kontur.kinfra.gradle.presets
 
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Configuration
-import org.gradle.api.attributes.Usage
 import org.gradle.api.plugins.BasePluginConvention
-import org.gradle.api.plugins.JavaPlatformPlugin
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPom
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.internal.publication.MavenPublicationInternal
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
 import org.gradle.api.publish.plugins.PublishingPlugin
-import ru.kontur.jinfra.gradle.presets.util.extension
-import ru.kontur.jinfra.gradle.presets.util.get
+import ru.kontur.kinfra.gradle.presets.util.extension
+import ru.kontur.kinfra.gradle.presets.util.get
 
 object PublishingPreset : Preset {
 

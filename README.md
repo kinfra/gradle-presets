@@ -1,5 +1,5 @@
-Presets for Gradle
--------------------------
+# Presets for Gradle
+
 This Gradle plugin applies common configuration that we use in our JVM projects at Kontur.
 It aids to avoid boilerplate in build scripts.
 
@@ -10,7 +10,7 @@ which are mainly triggered when some relevant plugin is applied (e.g. `java` or 
 
 ```groovy
 plugins {
-    id 'ru.kontur.jinfra.presets' version '<version>'
+    id 'ru.kontur.kinfra.presets' version '<version>'
 }
 ```
 
@@ -22,7 +22,7 @@ Currently the plugin requires Gradle version 5.4.
 
 ##### Disabled caching of changing and dynamic modules
 
-By default Gradle caches dependencies that are changing (snapshots) 
+By default, Gradle caches dependencies that are changing (snapshots) 
 or have dynamic versions (e.g. `1.+`) for 24 hours.
 Such caching is disabled.
 
@@ -34,7 +34,7 @@ following default repositories are added:
   * Local Maven cache (`mavenLocal`)
 
   * Bintray JCenter (`jcenter`)
- 
+
 This behavior can be customized in two ways:
 
   * __Add additional repositories__
@@ -74,7 +74,7 @@ This behavior can be customized in two ways:
 
 ##### Java target version is 1.8
 
-At the moment we use Java 1.8 in most of our projects.
+For now, default Java version in our projects is 1.8.
 
 ##### Full exception info in tests
 

@@ -1,4 +1,4 @@
-package ru.kontur.jinfra.gradle.presets.util
+package ru.kontur.kinfra.gradle.presets.util
 
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration

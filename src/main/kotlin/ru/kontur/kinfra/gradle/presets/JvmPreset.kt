@@ -1,11 +1,11 @@
-package ru.kontur.jinfra.gradle.presets
+package ru.kontur.kinfra.gradle.presets
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import ru.kontur.jinfra.gradle.presets.util.*
+import ru.kontur.kinfra.gradle.presets.util.*
 
 object JvmPreset : Preset {
 

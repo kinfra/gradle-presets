@@ -1,11 +1,11 @@
-package ru.kontur.jinfra.gradle.presets
+package ru.kontur.kinfra.gradle.presets
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.invocation.Gradle
 import org.gradle.util.VersionNumber
 
-class JinfraPresetsPlugin : Plugin<Project> {
+class KinfraPresetsPlugin : Plugin<Project> {
 
     private val presets = listOf(
         BasicPreset,
@@ -27,7 +27,7 @@ class JinfraPresetsPlugin : Plugin<Project> {
         val currentGradleVersion = VersionNumber.parse(gradle.gradleVersion)
         if (currentGradleVersion < VersionNumber.parse(minGradleVersion)) {
             throw RuntimeException(
-                "jinfra presets require Gradle $minGradleVersion+ (current is $currentGradleVersion)"
+                "Plugin ru.kontur.kinfra.presets require Gradle $minGradleVersion+ (current is $currentGradleVersion)"
             )
         }
     }

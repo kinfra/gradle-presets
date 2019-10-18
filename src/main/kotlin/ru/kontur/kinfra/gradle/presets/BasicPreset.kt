@@ -1,8 +1,6 @@
-package ru.kontur.jinfra.gradle.presets
+package ru.kontur.kinfra.gradle.presets
 
 import org.gradle.api.Project
-import org.gradle.api.tasks.wrapper.Wrapper
-import ru.kontur.jinfra.gradle.presets.util.extension
 import java.util.concurrent.TimeUnit
 
 object BasicPreset : Preset {

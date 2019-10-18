@@ -1,4 +1,4 @@
-package ru.kontur.jinfra.gradle.presets
+package ru.kontur.kinfra.gradle.presets
 
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -7,7 +7,7 @@ import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.SourceSet
 import org.gradle.jvm.tasks.Jar
-import ru.kontur.jinfra.gradle.presets.util.get
+import ru.kontur.kinfra.gradle.presets.util.get
 
 object LibraryPreset : Preset {
 
