@@ -90,9 +90,9 @@ To override it you may just depend on JUnit BOM of desired version manually.
 
 #### Kotlin configuration (applied with `org.jetbrains.kotlin.jvm` plugin)
 
-##### JVM target is 1.8
+##### Aligned JVM target
 
-Kotlin is being compiled into Java 1.8 bytecode, as is Java.
+Kotlin's target JVM version is set to the same as Java's `targetCompatibility`.
 
 ##### Compiler arguments
 
