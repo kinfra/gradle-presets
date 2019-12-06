@@ -22,6 +22,7 @@ gradlePlugin {
     plugins {
         presets {
             id = "ru.kontur.kinfra.presets"
+            displayName = "Kinfra presets for Gradle"
             implementationClass = "ru.kontur.kinfra.gradle.presets.KinfraPresetsPlugin"
         }
     }
@@ -29,6 +30,9 @@ gradlePlugin {
 
 pluginBundle {
     description = "Default configuration for Gradle projects used in Kontur"
+    vcsUrl = "https://github.com/kinfra/gradle-presets"
+    website = "https://github.com/kinfra/gradle-presets"
+    tags = ["defaults"]
 }
 
 wrapper {
