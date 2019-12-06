@@ -1,13 +1,12 @@
 package ru.kontur.kinfra.gradle.presets
 
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginConvention
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 import ru.kontur.kinfra.gradle.presets.util.*
 
 object KotlinPreset : Preset {
-
-    private const val kotlinJvmTarget = "1.8"
 
     override fun Project.configure() {
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
@@ -35,11 +34,15 @@ object KotlinPreset : Preset {
     private fun Project.configureCompiler() {
         tasks.allWithType<KotlinJvmCompile> { task ->
             with(task.kotlinOptions) {
-                jvmTarget = kotlinJvmTarget
                 freeCompilerArgs += listOf(
                     "-Xjsr305=strict",
                     "-Xjvm-default=enable"
                 )
+
+                afterEvaluate {
+                    val javaConvention = convention.getPlugin(JavaPluginConvention::class.java)
+                    jvmTarget = javaConvention.targetCompatibility.toString()
+                }
             }
         }
     }
