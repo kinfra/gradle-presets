@@ -99,13 +99,13 @@ Kotlin's target JVM version is set to the same as Java's `targetCompatibility`.
 The following options are added to Kotlin compiler command line by the plugin:
 
   * `-Xjsr305=strict`  
-    Use JSR-305 nullability annotations ([details][jsr-305])
+    Use JSR-305 nullability annotations. ([details][jsr-305])
   
-  * `-Xjvm-default=enable`  
-    Support for [@JvmDefault][jvm-default] annotation
+  * `-Xjvm-default=all-compatibility`  
+    Compile non-abstract interface methods as Java [default methods][default-interop]. Will be changed to `all` later.
 
   [jsr-305]: http://kotlinlang.org/docs/reference/java-interop.html#jsr-305-support
-  [jvm-default]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-default/index.html
+  [default-interop]: https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html#default-methods-in-interfaces
 
 ##### Stdlib dependency
 
