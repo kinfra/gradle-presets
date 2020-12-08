@@ -9,7 +9,7 @@ import ru.kontur.kinfra.gradle.presets.util.*
 
 object JvmPreset : Preset {
 
-    private const val junitVersion = "5.4.2"
+    private const val junitVersion = "5.7.0"
     private val javaVersion = JavaVersion.VERSION_11
 
     override fun Project.configure() {
@@ -44,14 +44,9 @@ object JvmPreset : Preset {
     private fun Project.addJunitDependencies() {
         val testImplementation by configurations
         val testRuntimeOnly by configurations
-
-        listOf(testImplementation, testRuntimeOnly).forEach { configuration ->
-            addPlatformDependency(configuration, "org.junit", "junit-bom", junitVersion)
-        }
-
+        addPlatformDependency(testImplementation, "org.junit", "junit-bom", junitVersion)
         addDependency(testImplementation, "org.junit.jupiter", "junit-jupiter-api")
         addDependency(testImplementation, "org.junit.jupiter", "junit-jupiter-params")
-
         addDependency(testRuntimeOnly, "org.junit.jupiter", "junit-jupiter-engine")
     }
 
