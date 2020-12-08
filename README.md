@@ -14,7 +14,7 @@ plugins {
 }
 ```
 
-Currently the plugin requires Gradle version 5.4.
+Currently, the plugin requires Gradle version 6.7.
 
 ### Available presets
 

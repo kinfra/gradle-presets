@@ -33,7 +33,7 @@ class KinfraPresetsPlugin : Plugin<Project> {
     }
 
     companion object {
-        private const val minGradleVersion = "5.4"
+        private const val minGradleVersion = "6.7"
     }
 
 }
