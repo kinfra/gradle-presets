@@ -132,9 +132,8 @@ Also, plugin creates a task named `install` as an alias for `publishToMavenLocal
 
 ##### Sources JAR
 
-A task named `sourcesJar` is created in the project.
+A task named `sourcesJar` is created in the project using Gradle's built-in [feature][sources-jar].
 
 Obliviously it packages project's main sources into a JAR with `sources` classifier.
 
-The task is configured as a dependency for `assemble` task
-and as an artifact for publication (if `maven-publish` plugin is applied).
+  [sources-jar]: https://docs.gradle.org/current/dsl/org.gradle.api.plugins.JavaPluginExtension.html#org.gradle.api.plugins.JavaPluginExtension:withSourcesJar()
