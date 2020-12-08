@@ -6,7 +6,7 @@ It aids to avoid boilerplate in build scripts.
 The plugin consists of several configuration blocks (called presets)
 which are mainly triggered when some relevant plugin is applied (e.g. `java` or `maven-publish`).
 
-### Usage
+## Usage
 
 ```groovy
 plugins {
@@ -16,17 +16,17 @@ plugins {
 
 Currently, the plugin requires Gradle version 6.7.
 
-### Available presets
+## Available presets
 
-#### Basic configuration (applied to any project)
+### Basic configuration (applied to any project)
 
-##### Disabled caching of changing and dynamic modules
+#### Disabled caching of changing and dynamic modules
 
 By default, Gradle caches dependencies that are changing (snapshots) 
 or have dynamic versions (e.g. `1.+`) for 24 hours.
 Such caching is disabled.
 
-##### Default repositories
+#### Default repositories
 
 When there are no repositories configured in the project at the time the plugin applied,
 following default repositories are added:
@@ -70,31 +70,36 @@ This behavior can be customized in two ways:
     }
     ```
 
-#### Java configuration (applied with `java` plugin)
+### Java configuration (applied with `java` plugin)
 
-##### Java target version is 11
+#### Java version is 11
 
 For now, default Java version in our projects is 11.
 
-##### Full exception info in tests
+#### Full exception info in tests
 
 When a test fails, its exception's stack trace is being logged to console.
 It helps to investigate failure on CI faster.
 
-##### JUnit Platform for tests
+#### JUnit Platform for tests
 
 We use JUnit 5 for in-project (unit and some integration) tests.
 
 Dependency on a recent JUnit release is automatically added by the plugin.
-To override it you may just depend on JUnit BOM of desired version manually.
+To override it, add dependency on JUnit BOM of desired version manually:
+```groovy
+dependncies {
+    testImplementation platform("org.junit:junit-bom:<version>")
+}
+```
 
-#### Kotlin configuration (applied with `org.jetbrains.kotlin.jvm` plugin)
+### Kotlin configuration (applied with `org.jetbrains.kotlin.jvm` plugin)
 
-##### Aligned JVM target
+#### Aligned JVM target
 
 Kotlin's target JVM version is set to the same as Java's `targetCompatibility`.
 
-##### Compiler arguments
+#### Compiler arguments
 
 The following options are added to Kotlin compiler command line by the plugin:
 
@@ -107,12 +112,12 @@ The following options are added to Kotlin compiler command line by the plugin:
   [jsr-305]: http://kotlinlang.org/docs/reference/java-interop.html#jsr-305-support
   [default-interop]: https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html#default-methods-in-interfaces
 
-##### Stdlib dependency
+#### Stdlib dependency
 
 Dependency on Kotlin stdlib is automatically added to `implementation` configuration.
 Its version is the same as Kotlin plugin's one.
 
-#### Publishing configuration (applied with `maven-publish` plugin)
+### Publishing configuration (applied with `maven-publish` plugin)
 
 The plugin creates a `MavenPublication` named `maven` and adds a project component to it:
 
@@ -128,9 +133,9 @@ Configuration of the POM can be accessed via `pom { }` block in the project, jus
 
 Also, plugin creates a task named `install` as an alias for `publishToMavenLocal`.
 
-#### Library configuration (applied with `java-library` plugin)
+### Library configuration (applied with `java-library` plugin)
 
-##### Sources JAR
+#### Sources JAR
 
 A task named `sourcesJar` is created in the project using Gradle's built-in [feature][sources-jar].
 
