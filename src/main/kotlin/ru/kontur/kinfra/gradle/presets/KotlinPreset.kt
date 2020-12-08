@@ -36,7 +36,7 @@ object KotlinPreset : Preset {
             with(task.kotlinOptions) {
                 freeCompilerArgs += listOf(
                     "-Xjsr305=strict",
-                    "-Xjvm-default=enable"
+                    "-Xjvm-default=all-compatibility"
                 )
 
                 afterEvaluate {
