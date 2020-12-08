@@ -72,13 +72,13 @@ This behavior can be customized in two ways:
 
 #### Java configuration (applied with `java` plugin)
 
-##### Java target version is 1.8
+##### Java target version is 11
 
-For now, default Java version in our projects is 1.8.
+For now, default Java version in our projects is 11.
 
 ##### Full exception info in tests
 
-When a test fails its exception's stack trace is being logged to console.
+When a test fails, its exception's stack trace is being logged to console.
 It helps to investigate failure on CI faster.
 
 ##### JUnit Platform for tests

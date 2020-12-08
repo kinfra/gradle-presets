@@ -10,7 +10,7 @@ import ru.kontur.kinfra.gradle.presets.util.*
 object JvmPreset : Preset {
 
     private const val junitVersion = "5.4.2"
-    private val javaVersion = JavaVersion.VERSION_1_8
+    private val javaVersion = JavaVersion.VERSION_11
 
     override fun Project.configure() {
         pluginManager.withPlugin("java") {

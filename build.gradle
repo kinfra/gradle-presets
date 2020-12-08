@@ -35,6 +35,14 @@ pluginBundle {
     tags = ["defaults"]
 }
 
+java {
+    withSourcesJar()
+}
+
+compileJava {
+    options.release = 11
+}
+
 wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
@@ -45,12 +53,6 @@ task install(group: 'publishing') {
 
 afterEvaluate {
     publishing {
-        publications {
-            pluginMaven {
-                artifact publishPluginJar
-            }
-        }
-
         repositories {
             def properties = project.properties
             def repoUrl = properties["publishing.repo.url"]
