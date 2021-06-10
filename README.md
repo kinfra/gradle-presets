@@ -33,7 +33,7 @@ following default repositories are added:
 
   * Local Maven cache (`mavenLocal`)
 
-  * Bintray JCenter (`jcenter`)
+  * Sonatype's Maven Central (`mavenCentral`)
 
 This behavior can be customized in two ways:
 

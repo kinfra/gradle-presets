@@ -24,7 +24,7 @@ object BasicPreset : Preset {
         with(repositories) {
             if (isEmpty()) {
                 mavenLocal()
-                jcenter()
+                mavenCentral()
             }
         }
     }
