@@ -36,7 +36,8 @@ object KotlinPreset : Preset {
             with(task.kotlinOptions) {
                 freeCompilerArgs += listOf(
                     "-Xjsr305=strict",
-                    "-Xjvm-default=all-compatibility"
+                    "-Xjvm-default=all-compatibility",
+                    "-Xopt-in=kotlin.RequiresOptIn"
                 )
                 javaParameters = true
 

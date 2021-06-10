@@ -112,8 +112,12 @@ The following options are added to Kotlin compiler command line by the plugin:
   * `-Xjvm-default=all-compatibility`  
     Compile non-abstract interface methods as Java [default methods][default-interop]. Will be changed to `all` later.
 
+  * `-Xopt-in=kotlin.RequiresOptIn`
+    Allow usage of `@OptIn` and `@RequiresOptIn` [annotations][opt-in].
+
   [jsr-305]: http://kotlinlang.org/docs/reference/java-interop.html#jsr-305-support
   [default-interop]: https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html#default-methods-in-interfaces
+  [opt-in]: https://kotlinlang.org/docs/opt-in-requirements.html
 
 #### Stdlib dependency
 
