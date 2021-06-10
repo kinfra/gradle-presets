@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "ru.kontur.kinfra"
-version = "1.4"
+version = "1.5"
 
 dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
