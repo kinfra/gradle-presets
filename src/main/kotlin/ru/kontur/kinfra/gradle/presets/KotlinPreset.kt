@@ -38,6 +38,7 @@ object KotlinPreset : Preset {
                     "-Xjsr305=strict",
                     "-Xjvm-default=all-compatibility"
                 )
+                javaParameters = true
 
                 afterEvaluate {
                     val javaConvention = convention.getPlugin(JavaPluginConvention::class.java)
