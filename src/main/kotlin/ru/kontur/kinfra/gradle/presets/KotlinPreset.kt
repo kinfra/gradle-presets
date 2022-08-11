@@ -3,8 +3,12 @@ package ru.kontur.kinfra.gradle.presets
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginConvention
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
-import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
-import ru.kontur.kinfra.gradle.presets.util.*
+import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
+import ru.kontur.kinfra.gradle.presets.util.addDependency
+import ru.kontur.kinfra.gradle.presets.util.addDependencyConstraint
+import ru.kontur.kinfra.gradle.presets.util.configureEach
+import ru.kontur.kinfra.gradle.presets.util.provideDelegate
+import java.lang.Runtime.Version
 
 object KotlinPreset : Preset {
 
@@ -12,14 +16,14 @@ object KotlinPreset : Preset {
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
             val kotlinVersion = getPluginVersion()
 
-            configureCompiler()
+            configureCompiler(Version.parse(kotlinVersion))
             addStdlibDependency(kotlinVersion)
         }
     }
 
     private fun Project.getPluginVersion(): String {
         try {
-            Class.forName("org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper")
+            Class.forName("org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapperKt")
         } catch (e: ClassNotFoundException) {
             throw IllegalStateException(
                 "Please add org.jetbrains.kotlin.jvm plugin to classpath of the build script " +
@@ -27,24 +31,30 @@ object KotlinPreset : Preset {
             )
         }
 
-        val kotlinPlugin = plugins.getPlugin(KotlinPluginWrapper::class.java)
-        return kotlinPlugin.kotlinPluginVersion
+        return checkNotNull(getKotlinPluginVersion())
     }
 
-    private fun Project.configureCompiler() {
-        tasks.allWithType<KotlinJvmCompile> { task ->
+    private fun Project.configureCompiler(version: Version) {
+        val additionalCompilerArgs = listOf(
+            "-Xjsr305=strict",
+            "-Xjvm-default=all-compatibility",
+            if (version < Version.parse("1.6.20")) {
+                "-Xopt-in=kotlin.RequiresOptIn"
+            } else {
+                "-opt-in=kotlin.RequiresOptIn"
+            }
+        )
+        tasks.configureEach<KotlinJvmCompile> { task ->
             with(task.kotlinOptions) {
-                freeCompilerArgs += listOf(
-                    "-Xjsr305=strict",
-                    "-Xjvm-default=all-compatibility",
-                    "-Xopt-in=kotlin.RequiresOptIn"
-                )
+                freeCompilerArgs += additionalCompilerArgs
                 javaParameters = true
+            }
+        }
 
-                afterEvaluate {
-                    val javaConvention = convention.getPlugin(JavaPluginConvention::class.java)
-                    jvmTarget = javaConvention.targetCompatibility.toString()
-                }
+        val javaConvention = convention.getPlugin(JavaPluginConvention::class.java)
+        afterEvaluate {
+            tasks.configureEach<KotlinJvmCompile> { task ->
+                task.kotlinOptions.jvmTarget = javaConvention.targetCompatibility.toString()
             }
         }
     }

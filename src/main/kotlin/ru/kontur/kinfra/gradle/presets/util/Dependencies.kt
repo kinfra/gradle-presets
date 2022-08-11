@@ -19,7 +19,6 @@ internal fun Project.addDependency(
     configuration.dependencies += dependencies.create(coordinates)
 }
 
-@Suppress("UnstableApiUsage")
 internal fun Project.addPlatformDependency(
     configuration: Configuration,
     group: String,
@@ -30,7 +29,6 @@ internal fun Project.addPlatformDependency(
     configuration.dependencies += dependencies.create(dependencies.platform("$group:$name:$version"))
 }
 
-@Suppress("UnstableApiUsage")
 internal fun Project.addDependencyConstraint(
     configuration: Configuration,
     group: String,
