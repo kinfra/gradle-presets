@@ -103,17 +103,13 @@ Kotlin's target JVM version is set to the same as Java's `targetCompatibility`.
 
 The following options are added to Kotlin compiler command line by the plugin:
 
-  * `-java-parameters`
-    Generate metadata for Java reflection on method parameters.
+  * `-java-parameters`: generate metadata for Java reflection on method parameters.
 
-  * `-Xjsr305=strict`  
-    Use JSR-305 nullability annotations. ([details][jsr-305])
+  * `-Xjsr305=strict`: use JSR-305 nullability annotations. ([details][jsr-305])
 
-  * `-Xjvm-default=all-compatibility`  
-    Compile non-abstract interface methods as Java [default methods][default-interop]. Will be changed to `all` later.
+  * `-Xjvm-default=all-compatibility`: compile non-abstract interface methods as Java [default methods][default-interop]. Will be changed to `all` later.
 
-  * `-Xopt-in=kotlin.RequiresOptIn`
-    Allow usage of `@OptIn` and `@RequiresOptIn` [annotations][opt-in].
+  * `-opt-in=kotlin.RequiresOptIn`: allow usage of `@OptIn` and `@RequiresOptIn` [annotations][opt-in].
 
   [jsr-305]: http://kotlinlang.org/docs/reference/java-interop.html#jsr-305-support
   [default-interop]: https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html#default-methods-in-interfaces

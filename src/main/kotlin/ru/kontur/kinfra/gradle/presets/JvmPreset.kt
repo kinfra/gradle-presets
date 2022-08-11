@@ -26,7 +26,7 @@ object JvmPreset : Preset {
     }
 
     private fun Project.configureJunit() {
-        tasks.allWithType<Test> { task ->
+        tasks.configureEach<Test> { task ->
             // Show stacktrace in console when a test fails
             with(task.testLogging) {
                 showStackTraces = true
@@ -34,7 +34,6 @@ object JvmPreset : Preset {
             }
 
             // Use JUnit Platform (JUnit 5) for tests
-            @Suppress("UnstableApiUsage")
             task.useJUnitPlatform()
         }
 
