@@ -1,7 +1,7 @@
 plugins {
     id "maven-publish"
     id "org.gradle.kotlin.kotlin-dsl" version "4.0.6"
-    id "com.gradle.plugin-publish" version '0.21.0'
+    id "com.gradle.plugin-publish" version "1.2.0"
 }
 
 group = "ru.kontur.kinfra"
@@ -16,20 +16,18 @@ repositories {
 }
 
 gradlePlugin {
+    vcsUrl = "https://github.com/kinfra/gradle-presets"
+    website = "https://github.com/kinfra/gradle-presets"
+
     plugins {
         presets {
             id = "ru.kontur.kinfra.presets"
             displayName = "Kinfra presets for Gradle"
+            description = "Default configuration for Gradle projects used in Kontur"
             implementationClass = "ru.kontur.kinfra.gradle.presets.KinfraPresetsPlugin"
+            tags.set(["defaults"])
         }
     }
-}
-
-pluginBundle {
-    description = "Default configuration for Gradle projects used in Kontur"
-    vcsUrl = "https://github.com/kinfra/gradle-presets"
-    website = "https://github.com/kinfra/gradle-presets"
-    tags = ["defaults"]
 }
 
 java {
@@ -45,19 +43,17 @@ task install(group: 'publishing') {
     dependsOn publishToMavenLocal
 }
 
-afterEvaluate {
-    publishing {
-        repositories {
-            def properties = project.properties
-            def repoUrl = properties["publishing.repo.url"]
-            if (repoUrl) {
-                maven {
-                    url = repoUrl
+publishing {
+    repositories {
+        def properties = project.properties
+        def repoUrl = properties["publishing.repo.url"]
+        if (repoUrl) {
+            maven {
+                url = repoUrl
 
-                    credentials {
-                        username = properties["publishing.repo.username"]
-                        password = properties["publishing.repo.password"]
-                    }
+                credentials {
+                    username = properties["publishing.repo.username"]
+                    password = properties["publishing.repo.password"]
                 }
             }
         }
