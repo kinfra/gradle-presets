@@ -1,14 +1,12 @@
 package ru.kontur.kinfra.gradle.presets
 
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginConvention
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
 import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import ru.kontur.kinfra.gradle.presets.util.addDependency
 import ru.kontur.kinfra.gradle.presets.util.addDependencyConstraint
 import ru.kontur.kinfra.gradle.presets.util.configureEach
 import ru.kontur.kinfra.gradle.presets.util.provideDelegate
-import java.lang.Runtime.Version
 
 object KotlinPreset : Preset {
 
@@ -16,7 +14,7 @@ object KotlinPreset : Preset {
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
             val kotlinVersion = getPluginVersion()
 
-            configureCompiler(Version.parse(kotlinVersion))
+            configureCompiler()
             addStdlibDependency(kotlinVersion)
         }
     }
@@ -31,30 +29,19 @@ object KotlinPreset : Preset {
             )
         }
 
-        return checkNotNull(getKotlinPluginVersion())
+        return getKotlinPluginVersion()
     }
 
-    private fun Project.configureCompiler(version: Version) {
+    private fun Project.configureCompiler() {
         val additionalCompilerArgs = listOf(
             "-Xjsr305=strict",
-            "-Xjvm-default=all-compatibility",
-            if (version < Version.parse("1.6.20")) {
-                "-Xopt-in=kotlin.RequiresOptIn"
-            } else {
-                "-opt-in=kotlin.RequiresOptIn"
-            }
+            "-Xjvm-default=all",
+            "-opt-in=kotlin.RequiresOptIn",
         )
-        tasks.configureEach<KotlinJvmCompile> { task ->
-            with(task.kotlinOptions) {
+        tasks.configureEach<KotlinJvmCompile> {
+            kotlinOptions {
                 freeCompilerArgs += additionalCompilerArgs
                 javaParameters = true
-            }
-        }
-
-        val javaConvention = convention.getPlugin(JavaPluginConvention::class.java)
-        afterEvaluate {
-            tasks.configureEach<KotlinJvmCompile> { task ->
-                task.kotlinOptions.jvmTarget = javaConvention.targetCompatibility.toString()
             }
         }
     }

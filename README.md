@@ -14,7 +14,7 @@ plugins {
 }
 ```
 
-Currently, the plugin requires Gradle version 6.7.
+Currently, the plugin requires Gradle version 8.0.
 
 ## Available presets
 
@@ -72,9 +72,9 @@ This behavior can be customized in two ways:
 
 ### Java configuration (applied with `java` plugin)
 
-#### Java version is 11
+#### Java version is 17
 
-For now, default Java version in our projects is 11.
+For now, default Java version in our projects is 17. It is set via `java.toolchain.languageVersion`.
 
 #### Full exception info in tests
 
@@ -95,10 +95,6 @@ dependncies {
 
 ### Kotlin configuration (applied with `org.jetbrains.kotlin.jvm` plugin)
 
-#### Aligned JVM target
-
-Kotlin's target JVM version is set to the same as Java's `targetCompatibility`.
-
 #### Compiler arguments
 
 The following options are added to Kotlin compiler command line by the plugin:
@@ -107,7 +103,7 @@ The following options are added to Kotlin compiler command line by the plugin:
 
   * `-Xjsr305=strict`: use JSR-305 nullability annotations. ([details][jsr-305])
 
-  * `-Xjvm-default=all-compatibility`: compile non-abstract interface methods as Java [default methods][default-interop]. Will be changed to `all` later.
+  * `-Xjvm-default=all`: compile non-abstract interface methods as Java [default methods][default-interop].
 
   * `-opt-in=kotlin.RequiresOptIn`: allow usage of `@OptIn` and `@RequiresOptIn` [annotations][opt-in].
 

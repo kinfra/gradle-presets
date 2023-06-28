@@ -17,7 +17,7 @@ internal inline fun <reified T : Any> Project.extension(block: T.() -> Unit = {}
     return extensions.getByType(T::class.java).apply(block)
 }
 
-internal inline fun <reified T : Task> TaskContainer.configureEach(noinline block: (T) -> Unit) {
+internal inline fun <reified T : Task> TaskContainer.configureEach(noinline block: T.() -> Unit) {
     withType(T::class.java).configureEach(block)
 }
 

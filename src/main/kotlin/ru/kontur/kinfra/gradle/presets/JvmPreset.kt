@@ -1,16 +1,16 @@
 package ru.kontur.kinfra.gradle.presets
 
-import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import ru.kontur.kinfra.gradle.presets.util.*
 
 object JvmPreset : Preset {
 
-    private const val junitVersion = "5.7.0"
-    private val javaVersion = JavaVersion.VERSION_11
+    private const val junitVersion = "5.9.3"
+    private const val javaVersion = 17
 
     override fun Project.configure() {
         pluginManager.withPlugin("java") {
@@ -20,21 +20,21 @@ object JvmPreset : Preset {
     }
 
     private fun Project.configureJava() {
-        convention.getPlugin(JavaPluginConvention::class.java).run {
-            sourceCompatibility = javaVersion
+        extension<JavaPluginExtension> {
+            toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion))
         }
     }
 
     private fun Project.configureJunit() {
-        tasks.configureEach<Test> { task ->
+        tasks.configureEach<Test> {
             // Show stacktrace in console when a test fails
-            with(task.testLogging) {
+            testLogging {
                 showStackTraces = true
                 exceptionFormat = TestExceptionFormat.FULL
             }
 
             // Use JUnit Platform (JUnit 5) for tests
-            task.useJUnitPlatform()
+            useJUnitPlatform()
         }
 
         addJunitDependencies()
